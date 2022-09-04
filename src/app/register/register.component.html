@@ -1,0 +1,47 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.value)">
+      <input type="text" id="firstName" class="fadeIn second" name="firstName" placeholder="First Name" ngModel #firstName="ngModel">
+	  <input type="text" id="lastName" class="fadeIn second" name="lastName" placeholder="Last Name" ngModel #lastName="ngModel"> 
+	  <input type="text" id="username" class="fadeIn second" name="username" placeholder="User Name" ngModel #username="ngModel"> 
+	  <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email" ngModel #email="ngModel"> 
+	  
+      <!-- <div class="fadeIn fourth">
+		<mat-progress-spinner mode="indeterminate" value='66' diameter="30"></mat-progress-spinner>
+		<input  type="submit"  value="Register">
+	    https://www.freakyjolly.com/angular-material-progress-spinner-loader-bar-tutorial/  
+	  
+	  </div> -->
+
+	  <!-- Add icon library -->
+
+
+		<!-- Add font awesome icons to buttons (note that the fa-spin class rotates the icon) -->
+		<button class="buttonload" type="submit" >
+		<i *ngIf="showLoading" class="fa fa-spinner fa-spin"></i> Register
+		</button>
+	  
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Already have account ? <a class="underlineHover" routerLink="/login" >Login</a><br>
+      
+    </div>
+
+  </div>
+</div>
