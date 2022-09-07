@@ -6,7 +6,7 @@ export const environment = {
   production: false,
    //apiUrl:'http://localhost:5000',
   //apiUrl:'http://tapanfirstbeanstack.ap-south-1.elasticbeanstalk.com',
-  apiUrl:'https://tapankumarachary.com',
+  apiUrl:'https://littleyoungbrains.com',
 };
 
 /*
