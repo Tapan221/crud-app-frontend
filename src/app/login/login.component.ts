@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit , OnDestroy{
           if(response.body)
           this.authenticationService.addUserToLocalStorage(response.body);
           this.router.navigateByUrl('/home');
+          this.notificationService.notify(NotificationType.SUCCESS,"LOGIN SUCCESSFUL")
           this.showLoading = false;
         },
         errorResponse=>{

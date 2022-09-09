@@ -9,38 +9,34 @@ import { AuthenticationService } from '../service/authentication.service';
 import { NotificationService } from '../service/notification.service';
 import { StudentService } from '../service/student.service';
 
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-add-students',
+  templateUrl: './add-students.component.html',
+  styleUrls: ['./add-students.component.css']
 })
-export class HomeComponent implements OnInit {
+export class AddStudentsComponent implements OnInit {
 
-  public studentList:Student[]=[];
+  showLoading: boolean = false;
   private subscriptions: Subscription[] = [];
-  showLoading: boolean | undefined;
+  public  stdObject:Student | undefined ;
 
   constructor(private router:Router,private authenticationService:AuthenticationService, private studentService:StudentService,
     private notificationService:NotificationService) { }
 
   ngOnInit(): void {
-      this.getAllStudents();
   }
 
-  public getAllStudents():void{
+  add(student:Student):void{
     this.showLoading = true;
+    console.log(student);
     this.subscriptions.push(
-      this.studentService.getAllStudents().subscribe(
+      this.studentService.add(student).subscribe(
         response=>{       
           this.showLoading = false;
-          if(response.body != null){
-            this.studentList = response.body;   
-            console.log(this.studentList);     
-            this.notificationService.notify(NotificationType.SUCCESS,"STUDENT OBJECTS RETRIEVED SUCCESSFULLY");
-
-          }
           
+          if(response.body != null)
+          this.stdObject= response.body;
+          this.notificationService.notify(NotificationType.SUCCESS,"STUDENT ADDED SUCCESSFULLY")
         },
         errorResponse=>{
           console.log(errorResponse);

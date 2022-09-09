@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from './service/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'supportportalui';
+
+  constructor(public authService:AuthenticationService) { 
+   
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isUserLoggedIn();
+}
 }

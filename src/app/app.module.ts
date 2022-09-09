@@ -16,6 +16,11 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LogoutComponent } from './logout/logout.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { StudentComponent } from './student/student.component';
+import { AddStudentsComponent } from './add-students/add-students.component';
 
 
 @NgModule({
@@ -23,7 +28,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    LogoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    StudentComponent,
+    AddStudentsComponent
   ],
   imports: [
     BrowserModule,

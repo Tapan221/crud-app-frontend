@@ -72,7 +72,7 @@ export class AuthenticationService {
        const expirationDate = this.helper.getTokenExpirationDate(this.token);
       const isExpired = this.helper.isTokenExpired(this.token);
       
-      if(!expirationDate){
+      if(expirationDate!= null){
        this.loggedInUser =  this.helper.decodeToken(this.token).sub;
 
       }
@@ -87,6 +87,7 @@ export class AuthenticationService {
   }
 
   isUserLoggedIn(){
+   this.validateToken();
     if(this.loggedInUser != null){
       return true;
     }
