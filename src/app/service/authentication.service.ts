@@ -1,98 +1,70 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpResponse } from '@angular/common/http';
-import { User } from '../model/user';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { User } from '../model/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  private host = environment.apiUrl;
-  private token: string | undefined |null;
-  private helper = new JwtHelperService();
-  loggedInUser: string|null|undefined;
+  public host = environment.apiUrl;
+  private token: string;
+  private loggedInUsername: string;
+  private jwtHelper = new JwtHelperService();
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
+  public login(user: User): Observable<HttpResponse<User>> {
+    return this.http.post<User>(`${this.host}/user/login`, user, { observe: 'response' });
+  }
 
-  logout() {
-    this.token=null;
-    this.loggedInUser=null;
+  public register(user: User): Observable<User> {
+    return this.http.post<User>(`${this.host}/user/register`, user);
+  }
+
+  public logOut(): void {
+    this.token = null;
+    this.loggedInUsername = null;
     localStorage.removeItem('user');
-    localStorage.removeItem('users');
     localStorage.removeItem('token');
+    localStorage.removeItem('users');
   }
 
-  login(user:User): Observable<HttpResponse<User>>{
-    return this.http.post<User>(`${this.host}/user/login`,user,{observe:'response'});
-
-  }
-
-  register(user:User): Observable<any>{
-    return this.http.post(`${this.host}/user/register`,user,{observe:'response'});
-
-  }
-
-  public saveToken(token:string){
+  public saveToken(token: string): void {
     this.token = token;
-    localStorage.setItem('token',token);
-
+    localStorage.setItem('token', token);
   }
 
-  public addUserToLocalStorage(user:User){
-    localStorage.setItem('user',JSON.stringify(user));
-
+  public addUserToLocalCache(user: User): void {
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
-  public getUserFromLocalStorage() : User{
-    //This will pasrse String to Object
-    return JSON.parse(localStorage.getItem('user')!);
-
+  public getUserFromLocalCache(): User {
+    return JSON.parse(localStorage.getItem('user'));
   }
 
-  public loadToken(){
-   this.token=  localStorage.getItem('token');
+  public loadToken(): void {
+    this.token = localStorage.getItem('token');
   }
 
-  public getToken():string{
-    return this.token!;
+  public getToken(): string {
+    return this.token;
   }
 
-  //npm i @auth0/angular-jwt   used for token validation
-
-  //https://www.npmjs.com/package/@auth0/angular-jwt
-
-  public validateToken(): boolean{
+  public isUserLoggedIn(): boolean {
     this.loadToken();
-
-    if(this.token!= null || this.token!= undefined){
-      const decodedToken = this.helper.decodeToken(this.token);
-       const expirationDate = this.helper.getTokenExpirationDate(this.token);
-      const isExpired = this.helper.isTokenExpired(this.token);
-      
-      if(expirationDate!= null){
-       this.loggedInUser =  this.helper.decodeToken(this.token).sub;
-
+    if (this.token != null && this.token !== ''){
+      if (this.jwtHelper.decodeToken(this.token).sub != null || '') {
+        if (!this.jwtHelper.isTokenExpired(this.token)) {
+          this.loggedInUsername = this.jwtHelper.decodeToken(this.token).sub;
+          return true;
+        }
       }
-      return true;
-
-    }
-    else{
-      this.logout();
+    } else {
+      this.logOut();
       return false;
     }
-   
   }
-
-  isUserLoggedIn(){
-   this.validateToken();
-    if(this.loggedInUser != null){
-      return true;
-    }
-    else return false;
-  }
-
 
 }

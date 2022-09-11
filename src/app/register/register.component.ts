@@ -1,64 +1,57 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { HeaderType } from '../enum/header-type-enum';
-import { NotificationType } from '../enum/notification-enum';
-import { User } from '../model/user';
 import { AuthenticationService } from '../service/authentication.service';
 import { NotificationService } from '../service/notification.service';
+import { User } from '../model/user';
+import { NotificationType } from '../enum/notification-type.enum';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
-
-  showLoading: boolean = false;
+export class RegisterComponent implements OnInit, OnDestroy {
+  public showLoading: boolean;
   private subscriptions: Subscription[] = [];
 
-  constructor(private router:Router,private authenticationService:AuthenticationService, 
-    private notificationService:NotificationService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService,
+              private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    if(this.authenticationService.isUserLoggedIn()){
-      this.router.navigateByUrl('/home');
+    if (this.authenticationService.isUserLoggedIn()) {
+      this.router.navigateByUrl('/user/management');
     }
-   
-  }
-  ngOnDestroy(){
-    this.subscriptions.forEach(sub=> sub.unsubscribe());
   }
 
-  onRegister(user:User):void{
+  public onRegister(user: User): void {
     this.showLoading = true;
-    console.log(user);
     this.subscriptions.push(
       this.authenticationService.register(user).subscribe(
-        response=>{
+        (response: User) => {
           this.showLoading = false;
-          this.notificationService.notify(NotificationType.SUCCESS,`A new account has been cretaed for ${response.firstName}.
-          Please check your mail for password to login`);
-          
+          this.sendNotification(NotificationType.SUCCESS, `A new account was created for ${response.firstName}.
+          Please check your email for password to log in.`);
         },
-        errorResponse=>{
-          console.log(errorResponse);
-          this.errorNotification(NotificationType.ERROR,errorResponse.error.message);
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
           this.showLoading = false;
-
         }
       )
     );
-
   }
-  errorNotification(ERROR: NotificationType, message: any) {
-    if(message){
-      this.notificationService.notify(ERROR,message);
 
+  private sendNotification(notificationType: NotificationType, message: string): void {
+    if (message) {
+      this.notificationService.notify(notificationType, message);
+    } else {
+      this.notificationService.notify(notificationType, 'An error occurred. Please try again.');
     }
-    else{
-      this.notificationService.notify(ERROR,'SOME ERROR OCCOURED , PLEASE TRY AGAIN');
-    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
 }

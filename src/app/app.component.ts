@@ -1,19 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from './service/authentication.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'supportportalui';
-
-  constructor(public authService:AuthenticationService) { 
-   
-  }
-
-  isLoggedIn(): boolean {
-    return this.authService.isUserLoggedIn();
-}
-}
+export class AppComponent {}
