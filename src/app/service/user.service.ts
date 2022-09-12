@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { CustomHttpRespone } from '../model/custom-http-response';
+import { PasswordReset } from '../model/passwordForm';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
@@ -25,6 +26,11 @@ export class UserService {
 
   public resetPassword(email: string): Observable<CustomHttpRespone> {
     return this.http.get<CustomHttpRespone>(`${this.host}/user/resetpassword/${email}`);
+  }
+
+  
+  public passwordReset(formData:PasswordReset): Observable<CustomHttpRespone> {
+    return this.http.post<CustomHttpRespone>(`${this.host}/user/passwordReset`, formData);
   }
 
   public updateProfileImage(formData: FormData): Observable<HttpEvent<User>> {
