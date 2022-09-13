@@ -13,11 +13,12 @@ import { FileUploadStatus } from '../model/file-upload.status';
 import { Role } from '../enum/role.enum';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
+
   private titleSubject = new BehaviorSubject<string>('Users');
   public titleAction$ = this.titleSubject.asObservable();
   public users: User[];
@@ -37,8 +38,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.authenticationService.getUserFromLocalCache();
-    this.getUsers(true);
-    this.updateCurrentUserRole(this.user);
   }
 
   updateCurrentUserRole(user:User){
@@ -47,6 +46,10 @@ export class UserComponent implements OnInit, OnDestroy {
 
   public changeTitle(title: string): void {
     this.titleSubject.next(title);
+  }
+
+  public goBack(){
+      this.router.navigateByUrl("/home");
   }
 
   public getUsers(showNotification: boolean): void {

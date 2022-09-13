@@ -1,0 +1,97 @@
+<div class="container" style="margin-top: 100px;">
+    <div class="d-flex justify-content-center h-50">
+        <div class="user_card">
+          <div class="d-flex justify-content-center">
+            <div style="margin-top: 10px;margin-bottom:-90px;">
+              <h3>Add Student</h3>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center form_container">
+            <form #studentForm="ngForm" (ngSubmit)="addStudent(studentForm.value)">
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="name" placeholder="First name" required ngModel #firstNameInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="firstNameInput.invalid && firstNameInput.touched" style="color:red;">Please enter a first name</span>
+
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="middleName" placeholder="Middle name" required ngModel #middleNameInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="middleNameInput.invalid && middleNameInput.touched" style="color:red;">Please enter a middle name</span>
+             
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="lastName" placeholder="Last name" required ngModel #lastNameInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="lastNameInput.invalid && lastNameInput.touched" style="color:red;">Please enter a last name</span>
+             
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="fathersName" placeholder="Fathers name" required ngModel #fatherNameInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="fatherNameInput.invalid && fatherNameInput.touched" style="color:red;">Please enter a Father's Name</span>
+             
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="mothersName" placeholder="Mothers  name" required ngModel #motherNameInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="motherNameInput.invalid && motherNameInput.touched" style="color:red;">Please enter a Mother's Name</span>
+
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" name="currentClass" placeholder="Current Standard" required ngModel #currentClassInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="currentClassInput.invalid && currentClassInput.touched" style="color:red;">Please enter a Class Details</span>
+
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-contact"></i></span>
+                </div>
+                <input type="tel" class="form-control" name="fathersContactNo" placeholder="f-contact"  required ngModel #fathersContactNoInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="fathersContactNoInput.invalid && fathersContactNoInput.touched" style="color:red;">Please enter Fathers Contact No</span>
+
+              <div class="input-group mb-3">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-contact"></i></span>
+                </div>
+                <input type="tel" class="form-control" name="mothersContactNo" placeholder="m-contact"  required ngModel #mothersContactNoInput="ngModel">
+              </div>
+              <span class="help-block" *ngIf="mothersContactNoInput.invalid && mothersContactNoInput.touched" style="color:red;">Please enter Mothers Contact No</span>
+             
+
+              <div class="input-group mb-3">
+                <select class="form-control" name="sex"  required ngModel #sexDropDown="ngModel">
+                    <option value='M'>Male</option>
+                    <option value='F'>Female</option>
+                    <option value='T'>Trans</option>
+                    <option value='U'>Unknown</option>
+                  </select>
+                </div>
+              <span class="help-block" *ngIf="sexDropDown.invalid &&  sexDropDown.touched" style="color:red;">Please Select an Option</span>
+
+
+          <div class="d-flex justify-content-center mt-3 login_container">
+            <button [disabled]="studentForm.invalid || showLoading" type="submit" name="button" class="btn login_btn">
+              <i *ngIf="showLoading" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+              <span *ngIf="showLoading">Loading...</span>
+              <span *ngIf="!showLoading">Add Student</span>
+            </button>
+          </div>
+        </form>
+     
+  </div>
+  

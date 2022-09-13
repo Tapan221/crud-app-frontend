@@ -6,33 +6,35 @@ import { AuthenticationService } from '../service/authentication.service';
 import { NotificationService } from '../service/notification.service';
 import { User } from '../model/user';
 import { NotificationType } from '../enum/notification-type.enum';
+import { Student } from '../model/student';
+import { StudentService } from '../service/student.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-add-student',
+  templateUrl: './add-student.component.html',
+  styleUrls: ['./add-student.component.css']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class AddStudentComponent implements OnInit {
+
   public showLoading: boolean;
   private subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private authenticationService: AuthenticationService,
+  constructor(private router: Router, private studentService: StudentService,
               private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    if (this.authenticationService.isUserLoggedIn()) {
-      this.router.navigateByUrl('/student');
-    }
+   
   }
 
-  public onRegister(user: User): void {
+  public addStudent(student: Student): void {
     this.showLoading = true;
+    console.log(student);
     this.subscriptions.push(
-      this.authenticationService.register(user).subscribe(
-        (response: User) => {
+      this.studentService.addStudent(student).subscribe(
+        (response: Student) => {
+          
           this.showLoading = false;
-          this.sendNotification(NotificationType.SUCCESS, `A new account was created for ${response.firstName}.
-          Please check your email for password to log in.`);
+          this.sendNotification(NotificationType.SUCCESS, `A new Student Added for ${response.name}.`);
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);

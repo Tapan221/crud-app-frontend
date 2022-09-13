@@ -13,11 +13,12 @@ import { FileUploadStatus } from '../model/file-upload.status';
 import { Role } from '../enum/role.enum';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit {
+
   private titleSubject = new BehaviorSubject<string>('Users');
   public titleAction$ = this.titleSubject.asObservable();
   public users: User[];
@@ -49,6 +50,10 @@ export class UserComponent implements OnInit, OnDestroy {
     this.titleSubject.next(title);
   }
 
+  public goBack(){
+      this.router.navigateByUrl("/home");
+  }
+
   public getUsers(showNotification: boolean): void {
     this.refreshing = true;
     this.subscriptions.push(
@@ -57,9 +62,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this.userService.addUsersToLocalCache(response);
           this.users = response;
           this.refreshing = false;
-          if (showNotification) {
-            this.sendNotification(NotificationType.SUCCESS, `${response.length} user(s) loaded successfully.`);
-          }
+          
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
