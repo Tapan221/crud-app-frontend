@@ -5,7 +5,7 @@ export class Student {
     public fathersName: string;
     public mothersName : Date;
     public currentClass: Date;
-    public fathersContactNo: number;
-    public mothersContactNo: number;
+    public fathersContactNo: string;
+    public mothersContactNo: string;
     public sex: CharacterData;
   }
