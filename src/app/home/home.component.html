@@ -1,12 +1,14 @@
   <div class="header">
     <a href="#default" class="logo">CompanyLogo</a>
-    <a routerLink="/user/management" [hidden]="!isAdmin" >User Management</a>
+    <a *ngIf="!isUserLoggedIn()" routerLink="/login"  style="font-weight: bold;">login</a>
+    <a routerLink="/user/management" [hidden]="!isAdmin" *ngIf="isUserLoggedIn()" >User Management</a>
     <div class="header-right">
-      <a routerLink="/students">Students</a>
-      <a routerLink="/addStudent">Add Students</a>
-      <a routerLink="/about">About Us</a> 
+      <a routerLink="/students" *ngIf="isUserLoggedIn()">Students</a>
+      <a routerLink="/addStudent" *ngIf="isUserLoggedIn()">Add Students</a>
+      <a *ngIf="isUserLoggedIn()" routerLink="/about">About Us</a> 
       <a routerLink="/gallery">Gallery</a>
-      <a routerLink="/profile">
+     
+      <a *ngIf="isUserLoggedIn()"  routerLink="/profile">
         {{user?.firstName}}
         <i class="fa fa-user"></i>
       </a>

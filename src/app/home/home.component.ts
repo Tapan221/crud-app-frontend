@@ -262,6 +262,10 @@ export class HomeComponent implements OnInit {
     return this.isAdmin || this.isManager;
   }
 
+  public isUserLoggedIn(): boolean {
+    return this.authenticationService.isUserLoggedIn();
+  }
+
   private getUserRole(): string {
     return this.authenticationService.getUserFromLocalCache().role;
   }

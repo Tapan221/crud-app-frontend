@@ -24,7 +24,7 @@ const routes: Routes = [
   {path: 'students', component: StudentsComponent},
   {path: 'gallery', component: GalleryComponent},
   { path: 'user/management', component: UserComponent, canActivate: [AuthenticationGuard] },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/gallery', pathMatch: 'full' }
 ];
 
 @NgModule({
