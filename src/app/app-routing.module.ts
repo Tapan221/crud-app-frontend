@@ -10,6 +10,7 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
 import { StudentsComponent } from './students/students.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'student', component: StudentsComponent },
   {path: 'profile', component: ProfileComponent},
   {path: 'students', component: StudentsComponent},
+  {path: 'gallery', component: GalleryComponent},
   { path: 'user/management', component: UserComponent, canActivate: [AuthenticationGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

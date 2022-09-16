@@ -20,6 +20,7 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
 import { StudentsComponent } from './students/students.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StudentsComponent } from './students/students.component';
     AddStudentComponent,
     AboutComponent,
     ProfileComponent,
-    StudentsComponent
+    StudentsComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,
